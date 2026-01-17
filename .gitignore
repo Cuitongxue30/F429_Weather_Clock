@@ -10,10 +10,14 @@
 *.lst
 *.map
 *.iex
+*.hex
+*.ioc
 *.build_log.htm
 JLinkLog.txt
 *.uvguix.*
 *.uvoptx
+*.uvprojx
+
 
 # VS Code settings (optional)
 .vscode/
