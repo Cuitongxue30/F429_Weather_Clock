@@ -1,0 +1,48 @@
+#include "App_freeRTOS.h"
+
+TaskHandle_t Task1Handle;
+TaskHandle_t Task2Handle;
+
+/**
+ * @brief 启动FreeRTOS
+ *
+ */
+void App_FreeRTOS_Start(void)
+{
+    // xTaskCreate(task1, "Task1", 128, NULL, 1, &Task1Handle);
+    // xTaskCreate(task2, "Task2", 128, NULL, 2, &Task2Handle);
+    xTaskCreate(vtask_KeyScan, "KeyScan", 128, NULL, 3, NULL);
+
+    vTaskStartScheduler();
+}
+
+void task1(void *pvParameters)
+{
+    for (;;)
+    {
+        DEBUG_PRINT("task1 print\r\n");
+        vTaskDelay(pdMS_TO_TICKS(1000));
+    }
+}
+
+void task2(void *pvParameters)
+{
+    for (;;)
+    {
+        DEBUG_PRINT("Hello FreeRTOS World 2222!\r\n");
+        vTaskDelay(pdMS_TO_TICKS(500));
+    }
+}
+
+void vtask_KeyScan(void *pvParameters)
+{
+    for (;;)
+    {
+        uint8_t key_event = Key_Scan_All();
+        if (key_event != 0)
+        {
+            DEBUG_PRINT("Key Event: %d\r\n", key_event);
+        }
+        vTaskDelay(pdMS_TO_TICKS(10));
+    }
+}

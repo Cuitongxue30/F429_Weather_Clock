@@ -2,17 +2,39 @@
 #define __KEY_H
 
 #include "main.h"
+#include "FreeRTOS.h"
+#include "task.h"
+#include "com_debug.h"
 
-#define KEY0        HAL_GPIO_ReadPin(KEY0_GPIO_Port, KEY0_Pin)                     /* 读取KEY0引脚 */
-#define KEY1        HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin)                     /* 读取KEY1引脚 */
-#define KEY2        HAL_GPIO_ReadPin(KEY2_GPIO_Port, KEY2_Pin)                     /* 读取KEY2引脚 */
-#define WK_UP       HAL_GPIO_ReadPin(WK_UP_GPIO_Port, WK_UP_Pin)                     /* 读取WKUP引脚 */
+typedef enum
+{
+    KEY_NONE = 0,
+    KEY0,
+    KEY1,
+    KEY2,
+} KeyNumEnum;
 
-#define KEY0_PRES    1                  /* KEY0按下 */
-#define KEY1_PRES    2                  /* KEY1按下 */
-#define KEY2_PRES    3                  /* KEY2按下 */
-#define WKUP_PRES    4                  /* KEY_UP按下(即WK_UP) */
+typedef enum
+{
+    KEY_STATE_IDLE = 0,
+    KEY_STATE_DEBOUNCE,
+    KEY_STATE_PRESSED,
+    KEY_STATE_WAIT_UP
+} KeyState_t;
 
-uint8_t key_scan(uint8_t mode);         /* 按键扫描函数 */
+typedef struct
+{
+    GPIO_TypeDef *port;
+    uint16_t pin;
+    uint8_t active_level;
+    KeyState_t state;
+    uint8_t id;
+} Button_t;
+
+#define BUTTON_COUNT (sizeof(Buttonlist) / sizeof(Button_t))
+
+uint8_t Button_Process_Single(Button_t *button);
+uint8_t Key_Scan_All(void);
+void Key_Init(void);
 
 #endif
