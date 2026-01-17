@@ -28,7 +28,6 @@ uint8_t Button_Process_Single(Button_t *button)
         if (is_pressed)
         {
             button->state = KEY_STATE_PRESSED;
-            return_id = button->id;
         }
         else
         {
@@ -38,13 +37,8 @@ uint8_t Button_Process_Single(Button_t *button)
     case KEY_STATE_PRESSED:
         if (!is_pressed)
         {
-            button->state = KEY_STATE_WAIT_UP;
-        }
-        break;
-    case KEY_STATE_WAIT_UP:
-        if (!is_pressed)
-        {
             button->state = KEY_STATE_IDLE;
+            return_id = button->id;
         }
         break;
     }

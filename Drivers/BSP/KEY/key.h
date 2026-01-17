@@ -19,7 +19,6 @@ typedef enum
     KEY_STATE_IDLE = 0,
     KEY_STATE_DEBOUNCE,
     KEY_STATE_PRESSED,
-    KEY_STATE_WAIT_UP
 } KeyState_t;
 
 typedef struct
