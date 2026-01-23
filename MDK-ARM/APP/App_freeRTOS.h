@@ -16,10 +16,12 @@
 #include "task.h"
 #include "com_debug.h"
 #include "key.h"
+#include "BSP_dht11.h"
 
 void task1(void *pvParameters);
 void task2(void *pvParameters);
 void vtask_KeyScan(void *pvParameters);
+void vtask_Dht11(void *pvParameters);
 /**
  * @brief 启动FreeRTOS
  *
